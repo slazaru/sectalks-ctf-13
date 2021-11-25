@@ -1,0 +1,21 @@
+FROM ubuntu:20.04
+
+RUN apt-get update -y && \
+    apt-get install -y python3-pip python3-dev
+
+COPY ./requirements5.txt /app5/requirements5.txt
+
+WORKDIR /app5
+
+RUN pip install -r requirements5.txt
+
+RUN apt-get update && apt-get install -y netcat curl wget
+
+COPY app5.py /app5
+
+COPY app5_flag.txt /home/flag.txt
+
+ENTRYPOINT [ "python3" ]
+
+CMD [ "app5.py" ]
+

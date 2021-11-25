@@ -1,0 +1,19 @@
+FROM ubuntu:20.04
+
+RUN apt-get update -y && \
+    apt-get install -y python3-pip python3-dev
+
+COPY ./requirements6.txt /app6/requirements6.txt
+
+WORKDIR /app6
+
+RUN pip install -r requirements6.txt
+
+RUN apt-get update && apt-get install -y netcat bash iputils-ping curl wget
+
+COPY app6.py /app6
+
+ENTRYPOINT [ "python3" ]
+
+CMD [ "app6.py" ]
+

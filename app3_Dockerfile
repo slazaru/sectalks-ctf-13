@@ -1,0 +1,24 @@
+FROM ubuntu:20.04
+
+RUN apt-get update -y
+
+WORKDIR /app3
+
+RUN         DEBIAN_FRONTEND=noninteractive apt-get install -y libfreetype6 libfreetype6-dev \
+            && DEBIAN_FRONTEND=noninteractive apt-get install -y libfontconfig1 libfontconfig1-dev wget
+RUN         export PHANTOM_JS="phantomjs-2.1.1-linux-x86_64" \
+            && wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+            && tar xvjf $PHANTOM_JS.tar.bz2 \
+            && mv $PHANTOM_JS /usr/local/share \
+            && ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
+
+COPY ./xssbot.js /app3/xssbot.js
+
+COPY ./xssbot.sh /app3/xssbot.sh
+
+RUN chmod +x /app3/xssbot.sh
+
+ENTRYPOINT [ "bash" ]
+
+CMD [ "xssbot.sh" ]
+

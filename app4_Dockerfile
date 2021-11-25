@@ -1,0 +1,19 @@
+FROM ubuntu:20.04
+
+RUN apt-get update -y && \
+    apt-get install -y python3-pip python3-dev
+
+COPY ./requirements4.txt /app4/requirements4.txt
+
+WORKDIR /app4
+
+RUN pip install -r requirements4.txt
+
+COPY app4.py /app4
+
+COPY app4_flag.txt /home/flag.txt
+
+ENTRYPOINT [ "python3" ]
+
+CMD [ "app4.py" ]
+

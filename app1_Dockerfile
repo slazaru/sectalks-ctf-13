@@ -1,0 +1,17 @@
+FROM ubuntu:20.04
+
+RUN apt-get update -y && \
+    apt-get install -y python3-pip python3-dev
+
+COPY ./requirements1.txt /app1/requirements1.txt
+
+WORKDIR /app1
+
+RUN pip install -r requirements1.txt
+
+COPY app1.py /app1
+
+ENTRYPOINT [ "python3" ]
+
+CMD [ "app1.py" ]
+
